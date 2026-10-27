@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTK Akademi — Yapay Zekâ Öğrenme Yol Haritası (Roadmap)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #131b2e;
+            --bg-card-hover: #1c2742;
+            --bg-header: #0f172a;
+            --border-color: #23314d;
+            --border-glow: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --m1-color: #38bdf8;
+            --m2-color: #4ade80;
+            --m3-color: #c084fc;
+            --m4-color: #fb923c;
+            --m5-color: #f43f5e;
+            --m6-color: #60a5fa;
+            --m7-color: #facc15;
+            --m8-color: #a78bfa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 65%, rgba(192, 132, 252, 0.05) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        /* Sticky Header & Progress Bar */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 8px 14px 8px 36px;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            width: 220px;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            width: 260px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .btn {
+            background: #1e293b;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: #334155;
+            border-color: #475569;
+        }
+
+        .btn-danger {
+            color: #f87171;
+            border-color: rgba(248, 113, 113, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(248, 113, 113, 0.15);
+            border-color: #f87171;
+        }
+
+        /* Progress Bar Area */
+        .progress-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+        }
+
+        .time-highlight {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 12px;
+            background: #1e293b;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            border-radius: 6px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+
+        /* Flowchart Container */
+        .roadmap-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .roadmap-tree {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 28px;
+            position: relative;
+        }
+
+        /* Flow Node Card */
+        .flow-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .flow-card:hover {
+            transform: translateY(-4px);
+            border-color: #3b82f6;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            padding: 18px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .module-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: #0b0f19;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-badge {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.06);
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.08);
+            white-space: nowrap;
+        }
+
+        /* Course Task List */
+        .course-list {
+            list-style: none;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .course-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            gap: 12px;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid transparent;
+        }
+
+        .course-item:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .course-item.completed {
+            opacity: 0.65;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .course-item.completed .course-link {
+            text-decoration: line-through;
+            color: var(--text-dim);
+        }
+
+        /* Custom Checkbox */
+        .checkbox-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .checkbox-wrapper input:checked + .custom-checkbox {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .custom-checkbox svg {
+            display: none;
+            width: 12px;
+            height: 12px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+        }
+
+        .checkbox-wrapper input:checked + .custom-checkbox svg {
+            display: block;
+        }
+
+        .course-link {
+            flex: 1;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .course-link:hover {
+            color: var(--border-glow);
+        }
+
+        .course-title-text {
+            flex: 1;
+        }
+
+        .course-duration {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .external-icon {
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .course-item:hover .external-icon {
+            opacity: 1;
+        }
+
+        /* Module Theme Styles */
+        .m1 .module-num { background-color: var(--m1-color); }
+        .m1:hover { border-color: var(--m1-color); }
+        
+        .m2 .module-num { background-color: var(--m2-color); }
+        .m2:hover { border-color: var(--m2-color); }
+
+        .m3 .module-num { background-color: var(--m3-color); }
+        .m3:hover { border-color: var(--m3-color); }
+
+        .m4 .module-num { background-color: var(--m4-color); }
+        .m4:hover { border-color: var(--m4-color); }
+
+        .m5 .module-num { background-color: var(--m5-color); }
+        .m5:hover { border-color: var(--m5-color); }
+
+        .m6 .module-num { background-color: var(--m6-color); }
+        .m6:hover { border-color: var(--m6-color); }
+
+        .m7 .module-num { background-color: var(--m7-color); }
+        .m7:hover { border-color: var(--m7-color); }
+
+        .m8 .module-num { background-color: var(--m8-color); }
+        .m8:hover { border-color: var(--m8-color); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-tree {
+                grid-template-columns: 1fr;
+            }
+            .header-top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .controls {
+                justify-content: space-between;
+            }
+            .search-box input {
+                width: 100%;
+            }
+            .progress-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY HEADER & PROGRESS TRACKER -->
+    <header>
+        <div class="header-container">
+            <div class="header-top">
+                <div class="brand-title">
+                    <span class="brand-badge">BTK Akademi</span>
+                    <h1>Yapay Zekâ Öğrenme Yol Haritası</h1>
+                </div>
+
+                <div class="controls">
+                    <div class="search-box">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="searchInput" placeholder="Kurs ara..." onkeyup="filterCourses()">
+                    </div>
+                    <button class="btn" onclick="toggleFilterCompleted()">
+                        <span id="filterBtnText">🎯 Sadece Eksikleri Göster</span>
+                    </button>
+                    <button class="btn btn-danger" onclick="resetProgress()">
+                        🔄 Sıfırla
+                    </button>
+                </div>
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="progress-info">
+                    <span class="progress-text" id="progressText">0 / 0 (%0)</span>
+                    <span>Tamamlanan Süre: <span class="time-highlight" id="completedTimeText">0 sa 0 dk</span> / <span id="totalTimeText">0 sa 0 dk</span></span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ROADMAP FLOWCHART CONTENT -->
+    <div class="roadmap-container">
+
+        <div id="roadmapContent" class="roadmap-tree">
+            <!-- Dynamic Content Generated via JS -->
+        </div>
+
+        <footer>
+            BTK Akademi AI Learning Roadmap • İnteraktif Öğrenme Takip Çizelgesi
+        </footer>
+    </div>
+
+    <script>
+        const urlMapping = {
+            "Yapay Zekâya Giriş": "https://www.btkakademi.gov.tr/portal/course/yapay-zekaya-giris-29193",
+            "Yapay Zekâ Dünyasına Giriş": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-dunyasina-giris-57867",
+            "Yapay Zekâ Uygulamaları": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-uygulamalari-58382",
+            "Güncel Yapay Zekâ Uygulamaları": "https://www.btkakademi.gov.tr/portal/course/guncel-yapay-zeka-uygulamalari-59427",
+            "Üretken Yapay Zekâya Giriş": "https://www.btkakademi.gov.tr/portal/course/uretken-yapay-zekaya-giris-45762",
+            "Prompt Mühendisliği": "https://www.btkakademi.gov.tr/portal/course/prompt-muhendisligi-66979",
+            "Excel Pivot Tablolarla Veri Analizi": "https://www.btkakademi.gov.tr/portal/course/excel-pivot-tablolarla-veri-analizi-45651",
+            "R ile Veri Bilimine Giriş": "https://www.btkakademi.gov.tr/portal/course/r-ile-veri-bilimine-giris-13050",
+            "Veri Bilimi İçin Python ve TensorFlow": "https://www.btkakademi.gov.tr/portal/course/veri-bilimi-icin-python-ve-tensorflow-11705",
+            "Veri Bilimi ve Makine Öğrenmesi Atölyesi Bootcamp 2022": "https://www.btkakademi.gov.tr/portal/course/veri-bilimi-ve-makine-ogrenmesi-atolyesi-bootcamp-2022-19100",
+            "Makine Öğrenmesinin Matematiksel Temelleri": "https://www.btkakademi.gov.tr/portal/course/makine-ogrenmesinin-matematiksel-temelleri-58939",
+            "Makine Öğrenmesi": "https://www.btkakademi.gov.tr/portal/course/makine-ogrenmesi-30123",
+            "Python ile Makine Öğrenmesi": "https://www.btkakademi.gov.tr/portal/course/python-ile-makine-ogrenmesi-11800",
+            "Python ile Makine Öğrenmesi Uygulamaları": "https://www.btkakademi.gov.tr/portal/course/python-ile-makine-ogrenmesi-uygulamalari-30284",
+            "Topluluk Öğrenmesi": "https://www.btkakademi.gov.tr/portal/course/topluluk-ogrenmesi-45870",
+            "Python ile Topluluk Öğrenmesi Pratikleri": "https://www.btkakademi.gov.tr/portal/course/python-ile-topluluk-ogrenmesi-pratikleri-46024",
+            "MATLAB ile Makine Öğrenmesi Algoritmaları": "https://www.btkakademi.gov.tr/portal/course/matlab-ile-makine-ogrenmesi-algoritmalari-58868",
+            "Java ile Makine Öğrenmesi Algoritmaları": "https://www.btkakademi.gov.tr/portal/course/java-ile-makine-ogrenmesi-algoritmalari-66949",
+            "Derin Öğrenmeye Giriş": "https://www.btkakademi.gov.tr/portal/course/derin-ogrenmeye-giris-35507",
+            "Yapay Sinir Ağları (ANN)": "https://www.btkakademi.gov.tr/portal/course/yapay-sinir-aglari-ann-47831",
+            "Keras ile Derin Öğrenme Algoritmaları": "https://www.btkakademi.gov.tr/portal/course/keras-ile-derin-ogrenme-algoritmalari-37613",
+            "PyTorch ile Derin Öğrenme Algoritmaları": "https://www.btkakademi.gov.tr/portal/course/pytorch-ile-derin-ogrenme-algoritmalari-44053",
+            "Transfer Öğrenimi": "https://www.btkakademi.gov.tr/portal/course/transfer-ogrenimi-41737",
+            "Evrimsel Sinir Ağları (CNN)": "https://www.btkakademi.gov.tr/portal/course/evrisimsel-sinir-aglari-cnn-59853",
+            "Artık Ağlar (ResNet)": "https://www.btkakademi.gov.tr/portal/course/artik-aglar-resnet-61243",
+            "RNN-Yinelemeli Sinir Ağları": "https://www.btkakademi.gov.tr/portal/course/rnn-yinelemeli-sinir-aglari-45724",
+            "Uzun Kısa Süreli Bellek (LSTM)": "https://www.btkakademi.gov.tr/portal/course/uzun-kisa-sureli-bellek-lstm-47522",
+            "Derin Öğrenme ile Zaman Serisi Analizi Pratikleri": "https://www.btkakademi.gov.tr/portal/course/derin-ogrenme-ile-zaman-serisi-analizi-pratikleri-58188",
+            "Pekiştirmeli Öğrenme": "https://www.btkakademi.gov.tr/portal/course/pekistirmeli-ogrenme-35428",
+            "Derin Öğrenme ile Görüntü İşleme Pratikleri": "https://www.btkakademi.gov.tr/portal/course/derin-ogrenme-ile-goruntu-isleme-pratikleri-54041",
+            "YOLOv11 ile Bilgisayarlı Görü Pratikleri": "https://www.btkakademi.gov.tr/portal/course/yolov11-ile-bilgisayarli-goru-pratikleri-60314",
+            "Derin Öğrenme ile Ses İşleme Pratikleri": "https://www.btkakademi.gov.tr/portal/course/derin-ogrenme-ile-ses-isleme-pratikleri-67836",
+            "Yapay Zekâ ile Görsel Sentez": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-ile-gorsel-sentez-45727",
+            "Kling AI": "https://www.btkakademi.gov.tr/portal/course/kling-ai-67411",
+            "Hailuo AI": "https://www.btkakademi.gov.tr/portal/course/hailuo-ai-58942",
+            "Gemini Veo": "https://www.btkakademi.gov.tr/portal/course/gemini-veo-59842",
+            "HeyGen": "https://www.btkakademi.gov.tr/portal/course/heygen-59964",
+            "ElevenLabs": "https://www.btkakademi.gov.tr/portal/course/elevenlabs-58553",
+            "Üretken Yapay Zekâ Araçları ile Video İşleme": "https://www.btkakademi.gov.tr/portal/course/uretken-yapay-zeka-araclari-ile-video-isleme-66115",
+            "Doğal Dil İşleme": "https://www.btkakademi.gov.tr/portal/course/dogal-dil-isleme-40852",
+            "Derin Öğrenme ile Doğal Dil İşleme Pratikleri": "https://www.btkakademi.gov.tr/portal/course/derin-ogrenme-ile-dogal-dil-isleme-pratikleri-56932",
+            "Uygulamalı Doğal Dil İşleme ve Metin Analitiği": "https://www.btkakademi.gov.tr/portal/course/uygulamali-dogal-dil-isleme-ve-metin-analitigi-60766",
+            "Büyük Dil Modellerine Giriş": "https://www.btkakademi.gov.tr/portal/course/buyuk-dil-modellerine-giris-46404",
+            "Erişim Destekli Üretim (RAG) Tabanlı Sohbet Botları": "https://www.btkakademi.gov.tr/portal/course/erisim-destekli-uretim-rag-tabanli-sohbet-botlari-57900",
+            "Büyük Dil Modelleri (LLM) ile Sesli Asistan Atölyesi": "https://www.btkakademi.gov.tr/portal/course/buyuk-dil-modelleri-llm-ile-sesli-asistan-atolyesi-58679",
+            "Kişiselleştirilmiş GPT'ler": "https://www.btkakademi.gov.tr/portal/course/kisisellestirilmis-gpt-ler-32002",
+            "Platformlarla Yapay Zekâ Ajanı Geliştirme": "https://www.btkakademi.gov.tr/portal/course/platformlarla-yapay-zeka-ajani-gelistirme-59643",
+            "Yapay Zekâ ve Bulut Teknolojileri": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-ve-bulut-teknolojileri-57978",
+            "ASP.NET Core ile API Tabanlı Yapay Zekâ Atölyesi": "https://www.btkakademi.gov.tr/portal/course/asp-net-core-ile-api-tabanli-yapay-zeka-atolyesi-64606",
+            "Yapay Zekâ ile Web ve Mobil Uygulama Geliştirme": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-ile-web-ve-mobil-uygulama-gelistirme-67576",
+            "MLOps": "https://www.btkakademi.gov.tr/portal/course/mlops-68867",
+            "Endüstride Yapay Zekâ": "https://www.btkakademi.gov.tr/portal/course/endustride-yapay-zeka-68253",
+            "Açıklanabilir Yapay Zekâ (XAI)": "https://www.btkakademi.gov.tr/portal/course/aciklanabilir-yapay-zeka-xai-68807",
+            "Güvenilir Yapay Zekâ": "https://www.btkakademi.gov.tr/portal/course/guvenilir-yapay-zeka-68850",
+            "Yapay Zekâ Etiği": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-etigi-45563",
+            "Yapay Zekâ Hukuku": "https://www.btkakademi.gov.tr/portal/course/yapay-zeka-hukuku-46313",
+            "ChatGPT": "https://www.btkakademi.gov.tr/portal/course/chatgpt-57914",
+            "Copilot": "https://www.btkakademi.gov.tr/portal/course/copilot-67601",
+            "Microsoft 365 Copilot ve Office Uygulamaları": "https://www.btkakademi.gov.tr/portal/course/microsoft-365-copilot-ve-office-uygulamalari-61715",
+            "NotebookLM": "https://www.btkakademi.gov.tr/portal/course/notebooklm-59592",
+            "Perplexity": "https://www.btkakademi.gov.tr/portal/course/perplexity-59175",
+            "DeepSeek": "https://www.btkakademi.gov.tr/portal/course/deepseek-59258",
+            "Anthropic Claude": "https://www.btkakademi.gov.tr/portal/course/anthropic-claude-59751",
+            "Manus AI": "https://www.btkakademi.gov.tr/portal/course/manus-ai-59174",
+            "Gamma": "https://www.btkakademi.gov.tr/portal/course/gamma-59231",
+            "Canva Magic Design": "https://www.btkakademi.gov.tr/portal/course/canva-magic-design-59093",
+            "Üretken Yapay Zekâ ile Sunum Hazırlama": "https://www.btkakademi.gov.tr/portal/course/uretken-yapay-zeka-ile-sunum-hazirlama-62703",
+            "Üretken Yapay Zekâ ile Tercüme": "https://www.btkakademi.gov.tr/portal/course/uretken-yapay-zeka-ile-tercume-58772",
+            "Araştırmada Üretken Yapay Zekâ Kullanımı": "https://www.btkakademi.gov.tr/portal/course/arastirmada-uretken-yapay-zeka-kullanimi-46249",
+            "Sosyal Medyada Yapay Zekâ ile Dijital Pazarlama": "https://www.btkakademi.gov.tr/portal/course/sosyal-medyada-yapay-zeka-ile-dijital-pazarlama-61567",
+            "Sağlıkta Yapay Zekâ": "https://www.btkakademi.gov.tr/portal/course/saglikta-yapay-zeka-34994",
+            "Kamu Yapay Zekâ Dönüşümü": "https://www.btkakademi.gov.tr/portal/course/kamu-yapay-zeka-donusumu-67524",
+            "Uluslararası İlişkilerde Yapay Zekâ": "https://www.btkakademi.gov.tr/portal/course/uluslararasi-iliskilerde-yapay-zeka-59132",
+            "Çocuklar için Yapay Zekâ": "https://www.btkakademi.gov.tr/portal/course/cocuklar-icin-yapay-zeka-10657",
+            "Çocuklar için PictoBlox ile Yapay Zekâ Uygulamaları": "https://www.btkakademi.gov.tr/portal/course/cocuklar-icin-pictoblox-ile-yapay-zeka-uygulamalari-45875"
+        };
+
+        // txt dosyasındaki süre verileri
+        const courseDurations = [
+            "07:32:36", "01:46:18", "14:58:35", "28:06:47", "05:40:38", "03:28:25",
+            "04:17:30", "08:03:37", "15:57:33", "61:42:00", "05:38:50", "13:25:38",
+            "22:11:43", "11:22:51", "05:15:03", "05:43:12", "15:19:05", "25:16:04",
+            "03:56:33", "10:41:38", "14:23:15", "14:19:20", "04:05:45", "06:58:31",
+            "03:06:46", "02:42:51", "01:31:08", "18:02:54", "03:06:00", "13:09:14",
+            "14:19:03", "20:29:24", "04:02:15", "02:31:35", "01:34:45", "03:38:48",
+            "05:10:40", "03:29:57", "02:35:31", "14:15:47", "15:24:42", "27:16:22",
+            "04:37:00", "08:56:08", "05:05:46", "02:32:09", "08:12:48", "05:25:03",
+            "29:22:58", "02:25:15", "14:42:41", "08:03:53", "05:01:28", "01:44:19",
+            "01:00:31", "04:39:24", "03:14:50", "00:59:54", "03:23:41", "02:23:06",
+            "00:55:35", "00:38:16", "02:19:01", "03:05:45", "00:39:24", "00:46:28",
+            "04:33:07", "03:41:38", "05:03:57", "01:56:10", "15:05:50", "07:33:36",
+            "01:34:14", "20:25:59", "05:32:15"
+        ];
+
+        const roadmapData = [
+            {
+                id: "m1",
+                num: "1",
+                title: "Yapay Zekâ Temelleri (AI Fundamentals)",
+                courses: [
+                    "Yapay Zekâya Giriş",
+                    "Yapay Zekâ Dünyasına Giriş",
+                    "Yapay Zekâ Uygulamaları",
+                    "Güncel Yapay Zekâ Uygulamaları",
+                    "Üretken Yapay Zekâya Giriş",
+                    "Prompt Mühendisliği"
+                ]
+            },
+            {
+                id: "m2",
+                num: "2",
+                title: "Veri Bilimi ve Makine Öğrenmesi",
+                courses: [
+                    "Excel Pivot Tablolarla Veri Analizi",
+                    "R ile Veri Bilimine Giriş",
+                    "Veri Bilimi İçin Python ve TensorFlow",
+                    "Veri Bilimi ve Makine Öğrenmesi Atölyesi Bootcamp 2022",
+                    "Makine Öğrenmesinin Matematiksel Temelleri",
+                    "Makine Öğrenmesi",
+                    "Python ile Makine Öğrenmesi",
+                    "Python ile Makine Öğrenmesi Uygulamaları",
+                    "Topluluk Öğrenmesi",
+                    "Python ile Topluluk Öğrenmesi Pratikleri",
+                    "MATLAB ile Makine Öğrenmesi Algoritmaları",
+                    "Java ile Makine Öğrenmesi Algoritmaları"
+                ]
+            },
+            {
+                id: "m3",
+                num: "3",
+                title: "Derin Öğrenme ve Sinir Ağları",
+                courses: [
+                    "Derin Öğrenmeye Giriş",
+                    "Yapay Sinir Ağları (ANN)",
+                    "Keras ile Derin Öğrenme Algoritmaları",
+                    "PyTorch ile Derin Öğrenme Algoritmaları",
+                    "Transfer Öğrenimi",
+                    "Evrimsel Sinir Ağları (CNN)",
+                    "Artık Ağlar (ResNet)",
+                    "RNN-Yinelemeli Sinir Ağları",
+                    "Uzun Kısa Süreli Bellek (LSTM)",
+                    "Derin Öğrenme ile Zaman Serisi Analizi Pratikleri",
+                    "Pekiştirmeli Öğrenme"
+                ]
+            },
+            {
+                id: "m4",
+                num: "4",
+                title: "Bilgisayarlı Görü, Ses ve Üretken Medya",
+                courses: [
+                    "Derin Öğrenme ile Görüntü İşleme Pratikleri",
+                    "YOLOv11 ile Bilgisayarlı Görü Pratikleri",
+                    "Derin Öğrenme ile Ses İşleme Pratikleri",
+                    "Yapay Zekâ ile Görsel Sentez",
+                    "Kling AI",
+                    "Hailuo AI",
+                    "Gemini Veo",
+                    "HeyGen",
+                    "ElevenLabs",
+                    "Üretken Yapay Zekâ Araçları ile Video İşleme"
+                ]
+            },
+            {
+                id: "m5",
+                num: "5",
+                title: "NLP, LLM ve Yapay Zekâ Asistanları",
+                courses: [
+                    "Doğal Dil İşleme",
+                    "Derin Öğrenme ile Doğal Dil İşleme Pratikleri",
+                    "Uygulamalı Doğal Dil İşleme ve Metin Analitiği",
+                    "Büyük Dil Modellerine Giriş",
+                    "Erişim Destekli Üretim (RAG) Tabanlı Sohbet Botları",
+                    "Büyük Dil Modelleri (LLM) ile Sesli Asistan Atölyesi",
+                    "Kişiselleştirilmiş GPT'ler",
+                    "Platformlarla Yapay Zekâ Ajanı Geliştirme"
+                ]
+            },
+            {
+                id: "m6",
+                num: "6",
+                title: "Yapay Zekâ Mühendisliği, Dağıtım ve MLOps",
+                courses: [
+                    "Yapay Zekâ ve Bulut Teknolojileri",
+                    "ASP.NET Core ile API Tabanlı Yapay Zekâ Atölyesi",
+                    "Yapay Zekâ ile Web ve Mobil Uygulama Geliştirme",
+                    "MLOps",
+                    "Endüstride Yapay Zekâ"
+                ]
+            },
+            {
+                id: "m7",
+                num: "7",
+                title: "Sorumlu Yapay Zekâ, Etik ve Yönetişim",
+                courses: [
+                    "Açıklanabilir Yapay Zekâ (XAI)",
+                    "Güvenilir Yapay Zekâ",
+                    "Yapay Zekâ Etiği",
+                    "Yapay Zekâ Hukuku"
+                ]
+            },
+            {
+                id: "m8",
+                num: "8",
+                title: "Yapay Zekâ Araçları & Sektörel Uygulamalar",
+                courses: [
+                    "ChatGPT",
+                    "Copilot",
+                    "Microsoft 365 Copilot ve Office Uygulamaları",
+                    "NotebookLM",
+                    "Perplexity",
+                    "DeepSeek",
+                    "Anthropic Claude",
+                    "Manus AI",
+                    "Gamma",
+                    "Canva Magic Design",
+                    "Üretken Yapay Zekâ ile Sunum Hazırlama",
+                    "Üretken Yapay Zekâ ile Tercüme",
+                    "Araştırmada Üretken Yapay Zekâ Kullanımı",
+                    "Sosyal Medyada Yapay Zekâ ile Dijital Pazarlama",
+                    "Sağlıkta Yapay Zekâ",
+                    "Kamu Yapay Zekâ Dönüşümü",
+                    "Uluslararası İlişkilerde Yapay Zekâ",
+                    "Çocuklar için Yapay Zekâ",
+                    "Çocuklar için PictoBlox ile Yapay Zekâ Uygulamaları"
+                ]
+            }
+        ];
+
+        // "HH:MM:SS" formatını saniyeye çevirme fonksiyonu
+        function timeToSeconds(timeStr) {
+            if (!timeStr) return 0;
+            const parts = timeStr.split(':').map(Number);
+            if (parts.length === 3) {
+                return parts[0] * 3600 + parts[1] * 60 + parts[2];
+            } else if (parts.length === 2) {
+                return parts[0] * 60 + parts[1];
+            }
+            return 0;
+        }
+
+        // Saniyeyi "X sa Y dk" formatına dönüştürme fonksiyonu
+        function secondsToFormattedTime(totalSec) {
+            const hours = Math.floor(totalSec / 3600);
+            const minutes = Math.floor((totalSec % 3600) / 60);
+            if (hours > 0) {
+                return `${hours} sa ${minutes} dk`;
+            }
+            return `${minutes} dk`;
+        }
+
+        let completedState = JSON.parse(localStorage.getItem('btk_ai_roadmap_state') || '{}');
+        let showOnlyPending = false;
+
+        function getCourseInfo(courseItem) {
+            let name = "";
+            let url = "";
+
+            if (typeof courseItem === 'string') {
+                name = courseItem;
+                url = urlMapping[name] || `https://www.btkakademi.gov.tr/portal/catalog?search=${encodeURIComponent(name)}`;
+            } else if (typeof courseItem === 'object') {
+                name = courseItem.name;
+                url = courseItem.url || urlMapping[name] || `https://www.btkakademi.gov.tr/portal/catalog?search=${encodeURIComponent(name)}`;
+            }
+
+            return { name, url };
+        }
+
+        function renderRoadmap() {
+            const container = document.getElementById('roadmapContent');
+            container.innerHTML = '';
+
+            let globalCourseIndex = 0;
+
+            roadmapData.forEach((module) => {
+                const card = document.createElement('div');
+                card.className = `flow-card ${module.id}`;
+                card.id = `card-${module.id}`;
+
+                let totalInModule = module.courses.length;
+                let completedInModule = 0;
+
+                const courseItemsHtml = module.courses.map((courseItem, cIdx) => {
+                    const info = getCourseInfo(courseItem);
+                    const courseId = `${module.id}_c${cIdx}`;
+                    const isChecked = !!completedState[courseId];
+                    if (isChecked) completedInModule++;
+
+                    const durationStr = courseDurations[globalCourseIndex] || "00:00:00";
+                    globalCourseIndex++;
+
+                    return `
+                        <li class="course-item ${isChecked ? 'completed' : ''}" data-course-id="${courseId}" data-duration="${durationStr}" data-title="${info.name.toLowerCase()}">
+                            <label class="checkbox-wrapper" onclick="event.stopPropagation()">
+                                <input type="checkbox" id="${courseId}" ${isChecked ? 'checked' : ''} onchange="toggleCourse('${courseId}')">
+                                <span class="custom-checkbox">
+                                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                            </label>
+                            <a href="${info.url}" target="_blank" class="course-link" title="BTK Akademi'de Gör">
+                                <span class="course-title-text">${info.name}</span>
+                                <span class="course-duration">${durationStr}</span>
+                                <svg class="external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
+                        </li>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <div class="module-num">${module.num}</div>
+                            <div class="card-title">${module.title}</div>
+                        </div>
+                        <span class="card-badge" id="badge-${module.id}">${completedInModule}/${totalInModule}</span>
+                    </div>
+                    <ul class="course-list">
+                        ${courseItemsHtml}
+                    </ul>
+                `;
+
+                container.appendChild(card);
+            });
+
+            updateProgress();
+        }
+
+        function toggleCourse(courseId) {
+            completedState[courseId] = !completedState[courseId];
+            if (!completedState[courseId]) {
+                delete completedState[courseId];
+            }
+            localStorage.setItem('btk_ai_roadmap_state', JSON.stringify(completedState));
+            
+            // Update item UI
+            const itemEl = document.querySelector(`[data-course-id="${courseId}"]`);
+            if (itemEl) {
+                if (completedState[courseId]) {
+                    itemEl.classList.add('completed');
+                } else {
+                    itemEl.classList.remove('completed');
+                }
+            }
+
+            // Update badges & progress bar
+            updateModuleBadges();
+            updateProgress();
+
+            if (showOnlyPending) {
+                filterCourses();
+            }
+        }
+
+        function updateModuleBadges() {
+            roadmapData.forEach(module => {
+                let completedInModule = 0;
+                let moduleTotalSeconds = 0;
+                let moduleCompletedSeconds = 0;
+
+                module.courses.forEach((_, cIdx) => {
+                    const courseId = `${module.id}_c${cIdx}`;
+                    const itemEl = document.querySelector(`[data-course-id="${courseId}"]`);
+                    const durationStr = itemEl ? itemEl.getAttribute('data-duration') : "00:00:00";
+                    const sec = timeToSeconds(durationStr);
+
+                    moduleTotalSeconds += sec;
+
+                    if (completedState[courseId]) {
+                        completedInModule++;
+                        moduleCompletedSeconds += sec;
+                    }
+                });
+
+                const badgeEl = document.getElementById(`badge-${module.id}`);
+                if (badgeEl) {
+                    badgeEl.innerText = `${completedInModule}/${module.courses.length} (${secondsToFormattedTime(moduleCompletedSeconds)})`;
+                }
+            });
+        }
+
+        function updateProgress() {
+            let totalCourses = 0;
+            let totalSeconds = 0;
+            let checkedSeconds = 0;
+
+            roadmapData.forEach(m => totalCourses += m.courses.length);
+
+            let checkedCourses = Object.keys(completedState).length;
+
+            document.querySelectorAll('.course-item').forEach(item => {
+                const durationStr = item.getAttribute('data-duration');
+                const sec = timeToSeconds(durationStr);
+                totalSeconds += sec;
+
+                if (item.classList.contains('completed')) {
+                    checkedSeconds += sec;
+                }
+            });
+
+            let percent = totalCourses > 0 ? Math.round((checkedCourses / totalCourses) * 100) : 0;
+
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressText').innerText = `${checkedCourses} / ${totalCourses} Tamamlandı (%${percent})`;
+            
+            document.getElementById('completedTimeText').innerText = secondsToFormattedTime(checkedSeconds);
+            document.getElementById('totalTimeText').innerText = secondsToFormattedTime(totalSeconds);
+        }
+
+        function filterCourses() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            document.querySelectorAll('.course-item').forEach(item => {
+                const title = item.getAttribute('data-title');
+                const isCompleted = item.classList.contains('completed');
+
+                let matchesSearch = title.includes(query);
+                let matchesFilter = !showOnlyPending || !isCompleted;
+
+                if (matchesSearch && matchesFilter) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide empty module cards during search
+            roadmapData.forEach(module => {
+                const card = document.getElementById(`card-${module.id}`);
+                const visibleItems = card.querySelectorAll('.course-item[style="display: flex;"], .course-item:not([style*="display: none"])');
+                if (query.length > 0 || showOnlyPending) {
+                    card.style.display = visibleItems.length > 0 ? 'block' : 'none';
+                } else {
+                    card.style.display = 'block';
+                }
+            });
+        }
+
+        function toggleFilterCompleted() {
+            showOnlyPending = !showOnlyPending;
+            const btnText = document.getElementById('filterBtnText');
+            if (showOnlyPending) {
+                btnText.innerText = "👀 Tümünü Göster";
+            } else {
+                btnText.innerText = "🎯 Sadece Eksikleri Göster";
+            }
+            filterCourses();
+        }
+
+        function resetProgress() {
+            if (confirm("Tüm tamamlanma durumunu sıfırlamak istediğinize emin misiniz?")) {
+                completedState = {};
+                localStorage.removeItem('btk_ai_roadmap_state');
+                renderRoadmap();
+            }
+        }
+
+        // Initialize roadmap
+        renderRoadmap();
+    </script>
+</body>
+</html>
